@@ -56,9 +56,9 @@ def create_price_message(data):
 # دکمه‌های شیشه‌ای
 def get_markup():
     markup = InlineKeyboardMarkup()
-    markup.add(InlineKeyboardButton("وب‌سایت ما", url="https://yourwebsite.com"))
-    markup.add(InlineKeyboardButton("صفحه اینستاگرام", url="https://instagram.com/yourpage"))
-    markup.add(InlineKeyboardButton("ارتباط با ما", url="https://t.me/yourtelegram"))
+    markup.add(InlineKeyboardButton("وب‌سایت ما", url="https://hinagold.com"))
+    markup.add(InlineKeyboardButton("صفحه اینستاگرام", url="https://instagram.com/hina__gold"))
+    markup.add(InlineKeyboardButton("ارتباط با ما", url="https://t.me/mahdi_mk100"))
     return markup
 
 # هندلر دستور /start
@@ -83,15 +83,14 @@ def send_prices(message):
 # تابع ارسال قیمت‌ها به کانال
 def send_prices_to_channel():
     while True:
-        current_hour = time.localtime().tm_hour
-        if 11 <= current_hour <= 23:
-            data = fetch_prices()
-            if data:
-                price_message = create_price_message(data)
-                bot.send_message(CHANNEL_ID, price_message, reply_markup=get_markup())
-            else:
-                bot.send_message(CHANNEL_ID, "خطا در دریافت قیمت‌ها.")
+        data = fetch_prices()
+        if data:
+            price_message = create_price_message(data)
+            bot.send_message(CHANNEL_ID, price_message, reply_markup=get_markup())
+        else:
+            bot.send_message(CHANNEL_ID, "خطا در دریافت قیمت‌ها.")
         time.sleep(10800)  # 3 ساعت
+
 
 # اجرای تابع ارسال قیمت‌ها به کانال در یک ترد جداگانه
 channel_thread = threading.Thread(target=send_prices_to_channel)
